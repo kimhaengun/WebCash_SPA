@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link href="css/mySite.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" >
+	$(function(){
+		console.log('시작');
+		communityList();
+		//리스트
+		function communityList(){
+			$('.listForm').show();
+			$('.writeForm').hide();
+			$('.detailForm').hide();
+			$('table>tbody').children().remove();
+			$('.pagination').find('div').first().find('a').remove();
+			$.getJSON('http://127.0.0.1:8080/myweb/api/list',function(data){
+				console.log(data);
+				for(obj of data.community){
+                    var innerHtml = "";
+                    innerHtml += "<tr>";
+                    innerHtml += "<td>"+obj.communityNo+"</td>";
+                    innerHtml += "<td>"+obj.title+"</td>";
+                    innerHtml += "<td>"+obj.id+"</td>";
+                    innerHtml += "<td>"+obj.hiredate+"</td>";
+                    innerHtml += "<td>"+obj.counts+"</td>";
+                    innerHtml += "</tr>";
+                    $('table>tbody').append(innerHtml);
+				}
+				for(var i=1; i<=data.community[0].pageCount; i++){
+					var innerHtml="";
+					innerHtml += "<a>"+i+"</a>";
+					$('.pagination').find('div').first().append(innerHtml);
+				}
+			});
+		}
+		
+		//페이징
+		$(document).on('click','#pageCount>a',function(){
+			console.log('페이징 클릭');
+			
+			var page = $(this).html();
+			$('table>tbody').children().remove();
+			$.getJSON('http://127.0.0.1:8080/myweb/api/list',{page:page},function(data){
+				console.log(data);
+				for(obj of data.community){
+                    var innerHtml = "";
+                    innerHtml += "<tr>";
+                    innerHtml += "<td>"+obj.communityNo+"</td>";
+                    innerHtml += "<td>"+obj.title+"</td>";
+                    innerHtml += "<td>"+obj.id+"</td>";
+                    innerHtml += "<td>"+obj.hiredate+"</td>";
+                    innerHtml += "<td>"+obj.counts+"</td>";
+                    innerHtml += "</tr>";
+                    $('table>tbody').append(innerHtml);
+				}
+				/*
+				for(var i=1; i<=data.community[0].pageCount; i++){
+					var innerHtml="";
+					innerHtml += "<a>"+i+"</a>";
+					$('.pagination').find('div').first().append(innerHtml);
+				}
+				*/
+			});
+		})
+		
+		//상세보기
+		$(document).on('click','table>tbody>tr',function(){
+			console.log('상세보기 클릭');
+			var communityNo=$(this).children().first().html();
+			console.log(communityNo);
+			var title;
+			$.getJSON('http://127.0.0.1:8080/myweb/api/detail',{communityNo:communityNo},function(data){
+				console.log('detail : ',data.community);
+				var communityNo = data.community[0].communityNo; 
+				var id = data.community[0].id;
+				var pw = data.community[0].pw;
+				title = data.community[0].title;
+				var content = data.community[0].content;
+				var hiredate = data.community[0].hiredate;
+				var counts = data.community[0].counts;
+				
+				$('.listForm').hide();
+				$('.detailForm').show();
+				$('#detailtitledom').find('p').text(title);
+				$('#detailInfodom').children()
+									.next()
+										.first().text(id)
+									.next()
+										.first().find('p').last().text(hiredate)
+									.end()
+									.end()
+									.next()
+										.first().find('p').last().text(counts);
+				$('#detailcontentdom').find('textarea').val(content);
+				$('#communityNo').val(communityNo);
+				$('#detailFormContent').find('div').first().children().first().show();
+				$('#detailFormContent').find('div').first().children().last().hide();
+				$('#contentRightDetail').children().first().text('상세보기');
+				$('#detailcontentdom').find('textarea').attr('readonly',true);
+				$('#detailBtn').text('확인');
+			})
+			//수정
+			$('#footerActionDom>div').find('a').first().click(function(){
+				console.log('수정 클릭');
+				$('#contentRightDetail').children().first().text('수정');
+				$('#detailFormContent').find('div').first().children().first().hide()
+				$('#detailFormContent').find('div').first().children().last().show();
+				$('#detailFormContent').find('div').first().children().last().val(title);
+				$('#detailcontentdom').find('textarea').attr('readonly',false);
+				$('#detailBtn').text('수정');
+				$('#detailBtn').click(function(){
+					if($('#detailBtn').html().startsWith('수정')){
+						var communityNo = $('#communityNo').val();
+						var title = $('#editeTitle').val();
+						var content = $('#detailcontentdom').find('textarea').val();
+						console.log(communityNo,title, content);
+						if(title!='' && content != '' ){
+							$.post('http://127.0.0.1:8080/myweb/api/edit',{communityNo:communityNo, title:title, content:content},function(data){
+								/*
+								$('#detailFormContent').find('div').first().children().first().show();
+								$('#detailFormContent').find('div').first().children().last().hide();
+								$('#detailFormContent').find('div').first().children().first().text(title);
+								$('#detailcontentdom').find('textarea').attr('readonly',true);
+								$('#contentRightDetail').children().first().text('상세보기');
+								$('#detailBtn').text('확인');
+								*/
+								communityList();
+							})
+						}
+					}
+				})
+			});
+			//삭제
+			$('#footerActionDom>div').find('a').last().click(function(){
+				console.log('삭제 클릭');
+				var communityNo = $('#communityNo').val();
+				console.log(communityNo);
+				$.post('http://127.0.0.1:8080/myweb/api/delete',{communityNo:communityNo},function(data){
+					communityList();
+				})
+			});
+		});
+		
+		//메뉴 home
+		$('#menu>ul>li>a').click(function(){
+			communityList();
+		})
+		
+		//게시글 작성
+		$('#cmWriteBtn>a').click(function(){
+			console.log('글쓰기 시작');
+			$('.listForm').hide();
+			$('.detailForm').hide();
+			$('.writeForm').show();
+			$('#footerActionDom').find('button').click(function(){
+				if($('#footerActionDom').find('button').html().startsWith('등록')){
+					var title = $('#titledom').find('input').val();
+					var content = $('#contentdom').find('textarea').val();
+					if(title!='' && content != '' ){
+						$.post('http://127.0.0.1:8080/myweb/api/write',{title:title, content:content},function(data){
+							$('#titledom').find('input').val('');
+							$('#contentdom').find('textarea').val('');
+							communityList();
+						})
+					}
+				}				
+			})
+		});
+		
+
+
+		
+	}) /*window function end*/
+</script>
+</head>
+<body>
+	
+	<div id="header">
+		<h1>Logo</h1>
+	</div>
+	<div id="menu">
+		<ul>
+			<li><a href="#">HOME</a></li>
+		</ul>
+	</div>
+	
+	
+	<div id="content">
+		<div id="content_cm">
+		<div id="contentLeft">
+			<div>게시판</div>
+		</div>
+		<div id="content" >
+		<!-- 게시판 메인 -->
+		<div class="listForm" id="contentRight" >
+		    
+			<div>목록</div>
+			<div>
+				<table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td>제목</td>
+                            <td>작성자</td>
+                            <td>작성일</td>
+                            <td>조회수 </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+			</div>
+            <div class="pagination">
+            <div id="pageCount">
+ 
+ 			</div>              
+                <div id="cmWriteBtn">
+                	<a href="#">글작성</a>
+                </div>
+            </div>
+		</div>
+		<!-- 게시판 메인 -->
+		<!-- 글쓰기 -->
+		<div class="writeForm" id="contentRight" >
+			<div>작성</div>
+			<div id="cmWriteFormContent">
+				<input type="hidden" name="id" value=""/>
+	                <div id="titledom">
+	                    <input  placeholder="제목을 입력해 주세요" name="title"  required/>
+	                </div>
+	                <div id="contentdom">
+	                    <textarea placeholder="내용을 입력해 주세요" name="content" required/></textarea>
+	                </div>
+	            <div id="footerActionDom">
+
+	            	<div>
+	                	<button>등록</button>
+	                </div>
+	            </div>
+			</div>
+		</div>
+		
+		<div class="detailForm" id="contentRightDetail">
+			<div>상세보기</div>
+			<hr/>
+			<input type="hidden" id="communityNo"/>
+			<div id="detailFormContent">
+	           <div id="detailtitledom">
+	               <p >제목</p>
+	               <input id="editeTitle" value="test"/>
+	           </div>
+	           <div id="detailInfodom">
+	                	<p>작성자 :</p>
+	                	<p>나나</p>
+	                	<div>
+	                		<p>작성일 :</p>
+	                		<p>2020</p>
+	                	</div>
+	                	<div>
+		                	<p>조회수 :</p>
+		               		<p>000</p>
+	                	</div>
+	            </div>
+	            <div id="detailcontentdom">
+	                    <textarea readonly/>test</textarea>
+	            </div>
+	            <div id="footerActionDom">
+	            	<div>
+	            		<a href="#">수정</a>
+	            		<a href="#">삭제</a>
+	            	</div>
+	            	<div>
+	                	<button id="detailBtn">확인</button>
+	                </div>
+	            </div>
+	        </div>
+			</div>
+		</div>
+		
+		
+		</div> <!-- end content -->
+	</div>
+	</div>
+	
+	
+	<div id=footer>
+		<p>Visit Mozilla Corporation’s not-for-profit parent, the Mozilla Foundation.</p>
+		<p>Portions of this content are ©1998–2023 by individual mozilla.org contributors. Content available under a Creative Commons license.</p>
+	</div>
+</body>
+</html>

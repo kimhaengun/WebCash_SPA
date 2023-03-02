@@ -1,0 +1,389 @@
+@charset "UTF-8";
+	        #myHr{
+            border: 0;
+    		height: 1px;
+    		background: #ccc;
+        }
+        /*header*/
+		#header{
+			margin:0 300px 0px 300px;
+		}
+		#header>h1{
+			width: 122px;
+            height: 80px;
+            text-indent: -99999px;
+            background-image: url("imgs/logo.jpg");
+		}
+		#header #loginForm{
+			float: right;
+			height: 10px;
+			padding-top: 50px;
+			
+		}
+		#header #loginForm>a{
+			margin-right: 10px;
+			margin-top: -100px;
+			text-decoration: none;
+			color: grey;
+		}
+		#q{
+			display: inline-block;
+			margin-right: 10px;
+		}
+		#header #loginForm>a:hover{
+			color: blue;
+		}
+		/*메뉴바*/
+		#menu{
+			background-color: rgb(230,230,250);
+		}
+
+		#menu{
+			overflow: hidden;
+		}
+		#menu>ul{
+			width: 250px;
+            margin: 0 auto;
+		}
+		#menu>ul>li{
+			list-style: none;
+			float: left;
+			width: 60px;
+			text-align: center;
+			width: 100px;
+			font-weight: normal;
+		}
+		
+		#menu>ul>li>a{
+			height: 70px;
+			line-height: 70px;
+			text-decoration: none;
+			font-size: 20px;		
+			color: black;
+			display: block;
+		}
+		#menu>ul>li>a:hover{
+			background-color: blueviolet;
+			color: white;
+		}
+		/*footer*/
+		#footer{
+			text-align:center;
+			background-color: rgb(230,230,250);
+		}
+		
+		/*community List*/
+			#content_cm{
+		width: 1000px;
+		height: 500px;
+		margin: 10px auto; 
+		border: 2px solid #a9a9a9;
+		border-radius: 10px;
+		padding:10px;
+	}
+	#contentLeft{
+		width:10%;
+		height:100%;
+		border-right: 2px solid #a9a9a9;
+		text-align: center;
+        float: left;
+	}
+	#contentLeft>div{
+        margin-top: 36px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#contentRight{
+		width:88%;
+		height:100%;
+        float: right;
+
+	}
+	#contentRight>div:nth-child(1){
+        font-size: 30px;
+		text-align: center;
+        margin-bottom: 10px;
+	}
+	
+	#contentRight>div:nth-child(2){
+        width: 100%;
+        margin: 0px auto;
+	}
+    table{
+        width: 100%;
+        margin: 0px auto;
+        text-align: center;
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        border-collapse: collapse;
+    }
+    table>thead>tr>td{
+        font-size: 20px;
+        font-weight: bold;
+        background-color: aqua;
+    }
+    table>thead>tr>td:nth-child(1),table>thead>tr>td:nth-child(5){
+        width: 10%;
+    }
+    table>thead>tr>td:nth-child(2){
+        width: 50%;
+    }
+    table>thead>tr>td:nth-child(3){
+        width: 15%;
+    }
+    table>thead>tr>td:nth-child(4){
+        width: 15%;
+    }
+    table>tbody{
+    	height:100px;
+    	overflow: scroll;
+    }
+    th, td{
+        height:33px;
+        border-top: 1px solid #f2f2f2;
+    }
+    .pagination {
+        text-align: center;
+        margin-top: 10px;
+        position: relative;
+    }
+
+    .pagination a {
+        display: inline-block;
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        }
+
+    .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    }
+
+    .pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+    }
+        #cmWriteBtn{
+    	float: right;
+    	position: absolute;
+    	right: 10px;
+    	top: 2px;
+    	border-radius: 5px;
+    }
+    #cmWriteBtn>a{
+        background-color: #0c1254;
+    	color: white;
+    	font-size: 15px;
+    	height: 20px;
+    	width: 70px;
+    }
+    #cmWriteBtn>a:hover{
+    	background-color: blue;
+    }
+    
+    /*게시글 작성*/
+    	#content_cm{
+		width: 1000px;
+		height: 500px;
+		margin: 10px auto; 
+		border: 2px solid #a9a9a9;
+		border-radius: 10px;
+		padding:10px;
+	}
+	#contentLeft{
+		width:10%;
+		height:100%;
+		border-right: 2px solid #a9a9a9;
+		text-align: center;
+        float: left;
+	}
+	#contentLeft>div{
+        margin-top: 36px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#contentRight{
+		width:88%;
+		height:100%;
+        float: right;
+        
+
+	}
+	#contentRight>div:nth-child(1){
+        font-size: 30px;
+		text-align: center;
+	}
+	
+	#contentRight>div:nth-child(2){
+        width: 100%;
+        margin: 10px auto;
+        text-align: center;
+	}
+	#cmWriteFormContent{
+		margin-top: 10px;
+	}
+	#cmWriteFormContent>div>div>button{
+		width: 150px;
+		height: 40px;
+		margin-top: 12px;
+		color: white;
+		background-color: #0c1254;
+		font-size: 20px;
+		border-radius: 10px;
+	}
+	#cmWriteFormContent>div>div>button:hover{
+		background-color: blue;
+	}
+	#titledom>input{
+		width: 95%;
+		height: 60px;
+		border: 2px solid #a9a9a9;
+		margin-top: 10px;
+		border-radius: 10px;
+		font-size: 20px;
+		font-weight: bold;
+		padding: 10px;
+	}
+	#contentdom>textarea{
+		margin-top: 10px;
+		width: 95%;
+		height: 260px;
+		border-radius: 10px;
+		overflow: auto;
+		border: 2px solid #a9a9a9;
+		font-size: 20px;
+		padding: 10px;
+	}
+	#footerActionDom>div:nth-child(1){
+		display: inline-block;
+		float: left;
+		padding: 10px;
+	}
+	#footerActionDom>div:nth-child(1)>a{
+		text-decoration: none;
+		color: gray;
+		height: 50px;
+		line-height: 50px;
+	}
+	
+	#footerActionDom>div:nth-child(1)>a:nth-child(1) {
+		margin-right: 5px;
+	}
+	#footerActionDom>div:nth-child(1)>a:nth-child(1):hover {
+		color: blue;
+		font-weight: bold;
+	}
+	#footerActionDom>div:nth-child(1)>a:nth-child(2):hover {
+		color: red;
+		font-weight: bold;
+	}
+	table>tbody>tr>td:nth-child(2):hover {
+		color:blue;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*상세보가*/
+		    	#content_cm{
+		width: 1000px;
+		height: 500px;
+		margin: 10px auto; 
+		border: 2px solid #a9a9a9;
+		border-radius: 10px;
+		padding:10px;
+	}
+	#contentLeft{
+		width:10%;
+		height:100%;
+		border-right: 2px solid #a9a9a9;
+		text-align: center;
+        float: left;
+	}
+	#contentLeft>div{
+        margin-top: 36px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#contentRightDetail{
+		width:88%;
+		height:100%;
+        float:right;
+
+	}
+	#contentRightDetail>div:nth-child(1){
+        font-size: 30px;
+		text-align: center;
+	}
+	
+	#contentRightDetail>div:nth-child(2){
+        width: 100%;
+        margin: 0px auto;
+        text-align: left;
+	}
+	#detailFormContent{
+		height: 90%;
+		overflow: auto;
+	}
+
+	#detailtitledom>p{
+		width: 95%;
+		height: 30px;
+		
+		margin-top: 5px;
+		
+		font-size: 40px;
+		font-weight: bold;
+	}
+	#detailcontentdom>textarea{
+		margin-top: 10px;
+		width: 98%;
+		height: 270px;
+		border-radius: 10px;
+		overflow: auto;
+		border: 2px solid #a9a9a9;
+		font-size: 15px;
+		padding: 5px;
+	}
+	#detailInfodom{
+		margin-top:-20px;
+		margin-bottom: -20px;
+	}
+	#detailInfodom>p:nth-child(2){
+		font-weight: bold;
+	}
+	#detailInfodom>p, #detailInfodom>div, #detailInfodom>div>p{
+		display: inline-block;
+	}
+	#detailInfodom>div{
+		margin-left: 10px;
+	}
+	#detailInfodom>div>p{
+		color: gray;
+		font-size: 13px;
+	}
+	#detailfooterdom{
+		margin-top: -5px;
+	}
+	#detailfooterdom>a {
+		margin-left: 10px;
+		text-decoration: none;
+		color: black;
+	}
+	#detailfooterdom>a:nth-child(1):hover {
+		color:red;
+	}
+	#detailBtn{
+		width: 150px;
+		height: 40px;
+		margin-top: 12px;
+		color: white;
+		background-color: #0c1254;
+		font-size: 20px;
+		border-radius: 10px;
+	}
+	#editeTitle{
+		height: 50px;
+		width: 99%;
+		border-radius: 5px;
+	}
